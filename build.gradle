@@ -1,0 +1,35 @@
+plugins {
+	id 'java'
+	id 'application'
+    id 'java-library'
+    id 'org.bytedeco.gradle-javacpp-platform' version "1.5.8"
+}
+sourceCompatibility = 17
+version = '1.0.0'
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    api 'org.bytedeco:javacv-platform:1.5.8'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+    test {
+        java {
+            srcDirs = []
+        }
+    }
+}
+
+application {
+    mainClassName = "pgdp.filter.Main"
+}
