@@ -3,8 +3,12 @@ package pgdp.filter;
 import java.security.spec.ECField;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.Function;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import org.apache.commons.lang3.NotImplementedException;
 
 public class VideoContainer {
@@ -17,9 +21,14 @@ public class VideoContainer {
 	 * Nutzt javacv um Videodatei darzustellen.
 	 */
 	public VideoContainer(FrameProvider fp) {
-
 		// TODO: Implementieren
-		throw new NotImplementedException();
+		try {
+			provider = fp;
+			frameStream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+					new FrameIterator(fp), Spliterator.ORDERED), false);
+		} catch (Exception e) {
+			throw new NotImplementedException();
+		}
 	}
 
 	/**
