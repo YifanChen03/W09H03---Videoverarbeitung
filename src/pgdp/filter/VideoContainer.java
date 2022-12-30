@@ -103,12 +103,11 @@ public class VideoContainer {
 		public Frame next() {
 			// TODO: Implementieren
 			try {
-				if (hasNext()) {
-					current = fp.nextFrame();
-					return current;
-				} else {
+				current = fp.nextFrame();
+				if (current == null) {
 					throw new NoSuchElementException();
 				}
+				return current;
 			} catch (Exception e) {
 				throw new NoSuchElementException();
 			}
