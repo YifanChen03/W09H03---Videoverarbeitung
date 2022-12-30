@@ -79,7 +79,7 @@ public class VideoContainer {
 			try {
 				fc.consume(frame);
 			} catch (FFmpegFrameRecorder.Exception e) {
-				throw new RuntimeException(e);
+
 			}
 		});
 		fc.close();
