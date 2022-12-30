@@ -1,5 +1,6 @@
 package pgdp.filter;
 
+import java.io.FileNotFoundException;
 import java.security.spec.ECField;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -20,14 +21,22 @@ public class VideoContainer {
 	/**
 	 * Nutzt javacv um Videodatei darzustellen.
 	 */
-	public VideoContainer(FrameProvider fp) {
+	public VideoContainer(FrameProvider fp) throws FileNotFoundException, IllegalVideoFormatException {
 		// TODO: Implementieren
-		try {
-			provider = fp;
-			frameStream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(
-					new FrameIterator(fp), Spliterator.ORDERED), false);
-		} catch (Exception e) {
-			throw new NotImplementedException();
+		provider = fp;
+		frameStream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+				new FrameIterator(fp), Spliterator.ORDERED), false);
+		if (!fp.fileExists()) {
+			throw new FileNotFoundException();
+		}
+		if (fp.getHeight() == 0 || fp.getWidth() == 0) {
+			throw new IllegalVideoFormatException();
+		}
+	}
+
+	public static class IllegalVideoFormatException extends Exception {
+		public String toString() {
+			return "One of the Dimensions of the FrameProvider is 0";
 		}
 	}
 
@@ -76,18 +85,18 @@ public class VideoContainer {
 		@Override
 		public boolean hasNext() {
 			// TODO: Implementieren
-			try {
-				return fp.nextFrame() != null;
-			} catch (Exception e) {
-				throw new NoSuchElementException();
+			if (current != null) {
+				return true;
 			}
+			throw new NoSuchElementException();
 		}
 
 		@Override
 		public Frame next() {
 			// TODO: Implementieren
 			try {
-				return fp.nextFrame();
+				current = fp.nextFrame();
+				return current;
 			} catch (Exception e) {
 				throw new NoSuchElementException();
 			}

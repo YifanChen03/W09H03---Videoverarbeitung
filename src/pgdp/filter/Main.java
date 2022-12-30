@@ -8,7 +8,11 @@ public final class Main {
 
 		VideoContainer in;
 	    FrameProvider fp = new FrameProvider("noot.mp4");
-		in = new VideoContainer(fp);
+		try {
+			in = new VideoContainer(fp);
+		} catch (Exception e) {
+
+		}
 
 		// limitiere Laufzeit
 		//in.limit(250);
