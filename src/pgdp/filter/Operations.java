@@ -1,6 +1,7 @@
 
 package pgdp.filter;
 
+import java.awt.*;
 import java.util.function.Function;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -11,9 +12,26 @@ public final class Operations {
 	private Operations() {}
 
 	public static Frame grayscale(Frame frame) {
-
 		// TODO: Implementieren
-		throw new NotImplementedException();
+		int frameHeight = frame.getHeight();
+		int frameWidth = frame.getWidth();
+
+		//for every pixel in frame get the RGB and set it to Grayscale
+		for (int w = 0; w < frameWidth; w++) {
+			for (int h = 0; h < frameHeight; h++) {
+				int px_rgb = frame.getPixels().getRGB(h, w);
+				int r, g, b;
+				int grayscaleRGB;
+				Color px_color = new Color(px_rgb);
+				r = px_color.getRed();
+				g = px_color.getGreen();
+				b = px_color.getBlue();
+				grayscaleRGB = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+				frame.getPixels().setRGB(h, w, grayscaleRGB);
+			}
+		}
+
+		return frame;
 	}
 
 	public static Function<Frame, Frame> crop(int width, int height) {
