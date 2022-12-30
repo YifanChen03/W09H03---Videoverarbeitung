@@ -80,10 +80,11 @@ public final class Operations {
 					cutOff = heightDiff / 2;
 					if (heightDiff % 2 == 0) {
 						//add equal amount of pixels on top and on the bottom
-						newFramePixels = newFramePixels.getSubimage(0, - cutOff, frameWidth, frameHeight + cutOff);
+						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth,
+								frameHeight + cutOff);
 					} else {
 						//add one more on the side that's further from the Pixel (0, 0)
-						newFramePixels = newFramePixels.getSubimage(0, - cutOff, frameWidth,
+						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth,
 								frameHeight + cutOff + 1);
 					}
 				}
@@ -93,11 +94,11 @@ public final class Operations {
 					cutOff = widthDiff / 2;
 					if (widthDiff % 2 == 0) {
 						//add equal amount of pixels on left and rigth side
-						newFramePixels = newFramePixels.getSubimage(- cutOff, 0, frameWidth + cutOff,
+						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth + cutOff,
 								frameHeight);
 					} else {
 						//add one more on the side that's further from the Pixel (0, 0)
-						newFramePixels = newFramePixels.getSubimage(- cutOff, 0, frameWidth + cutOff + 1,
+						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth + cutOff + 1,
 								frameHeight);
 					}
 				}
