@@ -106,12 +106,8 @@ public class VideoContainer {
 		public boolean hasNext() {
 			// TODO: Implementieren
 			try {
-				if (checkNext.nextFrame() == null) {
-					return false;
- 				} else {
-					current = fp.nextFrame();
-					return true;
-				}
+				current = fp.nextFrame();
+				return current != null;
 			} catch (FFmpegFrameGrabber.Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -120,11 +116,10 @@ public class VideoContainer {
 		@Override
 		public Frame next() {
 			// TODO: Implementieren
-			if (hasNext()) {
-				return current;
-			} else {
+			if (current == null) {
 				throw new NoSuchElementException();
 			}
+			return current;
 		}
 	}
 }
