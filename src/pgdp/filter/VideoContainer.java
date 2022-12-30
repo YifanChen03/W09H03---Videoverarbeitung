@@ -90,11 +90,7 @@ public class VideoContainer {
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
-			try {
-				current = fp.nextFrame();
-			} catch (FFmpegFrameGrabber.Exception e) {
-				throw new NoSuchElementException();
-			}
+			current = next();
 		}
 
 		@Override
@@ -107,8 +103,11 @@ public class VideoContainer {
 		public Frame next() {
 			// TODO: Implementieren
 			try {
-				current = fp.nextFrame();
-				return current;
+				if (hasNext()) {
+					current = fp.nextFrame();
+					return current;
+				}
+				throw new NoSuchElementException();
 			} catch (Exception e) {
 				throw new NoSuchElementException();
 			}
