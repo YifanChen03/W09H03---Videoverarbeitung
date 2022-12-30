@@ -90,11 +90,7 @@ public class VideoContainer {
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
-			try {
-				current = fp.nextFrame();
-			} catch (Exception e) {
-
-			}
+			current = null;
 		}
 
 		@Override
