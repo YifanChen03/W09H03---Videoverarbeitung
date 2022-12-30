@@ -77,7 +77,9 @@ public class VideoContainer {
 		//throw new NotImplementedException();
 		frameStream.forEach(frame -> {
 			try {
-				fc.consume(frame);
+				if (frame != null) {
+					fc.consume(frame);
+				}
 			} catch (FFmpegFrameRecorder.Exception e) {
 				throw new RuntimeException();
 			}
