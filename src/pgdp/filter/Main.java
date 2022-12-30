@@ -11,7 +11,7 @@ public final class Main {
 		try {
 			in = new VideoContainer(fp);
 		} catch (Exception e) {
-
+			System.out.println("An Exception was thrown when constructing new VideoContainer");
 		}
 
 		// limitiere Laufzeit

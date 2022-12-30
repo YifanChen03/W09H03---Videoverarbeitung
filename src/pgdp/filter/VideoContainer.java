@@ -46,15 +46,15 @@ public class VideoContainer {
 	 * @param //checkFunction
 	 */
 	public void applyFunc(Function<Frame, Frame> function) {
-
 		// TODO: Implementieren
-		throw new NotImplementedException();
+		//throw new NotImplementedException();
+		frameStream = getFrameStream().map(function);
 	}
 
 	public void limit(long frames) {
-
 		// TODO: Implementieren
-		throw new NotImplementedException();
+		//throw new NotImplementedException();
+		frameStream = getFrameStream().limit(frames);
 	}
 
 	public FrameProvider getProvider() {
@@ -85,10 +85,7 @@ public class VideoContainer {
 		@Override
 		public boolean hasNext() {
 			// TODO: Implementieren
-			if (current != null) {
-				return true;
-			}
-			throw new NoSuchElementException();
+			return current != null;
 		}
 
 		@Override
