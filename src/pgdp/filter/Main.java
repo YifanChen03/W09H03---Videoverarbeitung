@@ -24,11 +24,11 @@ public final class Main {
 		//in.applyFunc(Operations.crop(in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight()));
 
 		// Ausschreiben
-//		try {
-//		    FrameConsumer fc = new FrameConsumer(in.getProvider(), "out_finalFinal_Donev2.mp4", in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight());
-//			in.write(fc);
-//		} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
-//			System.err.println("Error writing File");
-//		}
+		try {
+		    FrameConsumer fc = new FrameConsumer(in.getProvider(), "out_finalFinal_Donev2.mp4", in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight());
+			in.write(fc);
+		} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+			System.err.println("Error writing File");
+		}
 	}
 }
