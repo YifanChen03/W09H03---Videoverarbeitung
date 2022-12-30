@@ -26,8 +26,11 @@ public final class Operations {
 				r = px_color.getRed();
 				g = px_color.getGreen();
 				b = px_color.getBlue();
+				//grayscaleRGB is the value for Red, Green and Blue
 				grayscaleRGB = (int) (0.299 * r + 0.587 * g + 0.114 * b);
-				frame.getPixels().setRGB(h, w, grayscaleRGB);
+				//convert into one rgb int
+				int rgb = new Color(grayscaleRGB, grayscaleRGB, grayscaleRGB).getRGB();
+				frame.getPixels().setRGB(h, w, rgb);
 			}
 		}
 
