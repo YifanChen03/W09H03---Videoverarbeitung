@@ -87,16 +87,25 @@ public class VideoContainer {
 	
 	private class FrameIterator implements Iterator<Frame> {
 		private FrameProvider fp;
+		private FrameProvider checkNextfp;
 		private Frame current;
+		private Frame nextCurrent;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
-			current = next();
+			checkNextfp = fp;
+			try {
+				current = this.fp.nextFrame();
+				checkNextfp.nextFrame();
+				nextCurrent = checkNextfp.nextFrame();
+			} catch (Exception e) {
+				throw new NoSuchElementException();
+			}
 		}
 
 		@Override
 		public boolean hasNext() {
 			// TODO: Implementieren
-			return current != null;
+			return nextCurrent != null;
 		}
 
 		@Override
@@ -104,7 +113,8 @@ public class VideoContainer {
 			// TODO: Implementieren
 			try {
 				current = fp.nextFrame();
-				if (current == null) {
+				nextCurrent = checkNextfp.nextFrame();
+				if (!hasNext()) {
 					throw new NoSuchElementException();
 				}
 				return current;
