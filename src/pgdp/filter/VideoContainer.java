@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.FrameRecorder;
 
@@ -89,6 +90,7 @@ public class VideoContainer {
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
+			current = next();
 		}
 
 		@Override
