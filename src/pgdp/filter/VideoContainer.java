@@ -87,15 +87,9 @@ public class VideoContainer {
 	
 	private class FrameIterator implements Iterator<Frame> {
 		private FrameProvider fp;
-		private FrameProvider checkNextfp;
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
-			try {
-				current = this.fp.nextFrame();
-			} catch (FFmpegFrameGrabber.Exception e) {
-				throw new NoSuchElementException();
-			}
 		}
 
 		@Override
