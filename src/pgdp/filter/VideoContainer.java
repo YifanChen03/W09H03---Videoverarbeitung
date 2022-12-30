@@ -75,7 +75,7 @@ public class VideoContainer {
 	public void write(FrameConsumer fc) throws FrameRecorder.Exception {
 		// TODO: Implementieren
 		//throw new NotImplementedException();
-		frameStream.forEach(frame -> {
+		/*frameStream.forEach(frame -> {
 			try {
 				if (frame != null) {
 					fc.consume(frame);
@@ -83,11 +83,11 @@ public class VideoContainer {
 			} catch (FFmpegFrameRecorder.Exception e) {
 				throw new RuntimeException();
 			}
-		});
-		/*Iterator i = frameStream.iterator();
+		});*/
+		Iterator i = frameStream.iterator();
 		while (i.hasNext()) {
 			fc.consume((Frame) i.next());
-		}*/
+		}
 
 		fc.close();
 	}
