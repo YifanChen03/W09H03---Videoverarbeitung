@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.bytedeco.javacv.FFmpegFrameRecorder;
+import org.bytedeco.javacv.FrameRecorder;
 
 public class VideoContainer {
 
@@ -69,10 +71,17 @@ public class VideoContainer {
 		return frameStream;
 	}
 
-	public void write(FrameConsumer fc) {
-
+	public void write(FrameConsumer fc) throws FrameRecorder.Exception {
 		// TODO: Implementieren
-		throw new NotImplementedException();
+		//throw new NotImplementedException();
+		frameStream.forEach(frame -> {
+			try {
+				fc.consume(frame);
+			} catch (FFmpegFrameRecorder.Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
+		fc.close();
 	}
 	
 	private class FrameIterator implements Iterator<Frame> {
