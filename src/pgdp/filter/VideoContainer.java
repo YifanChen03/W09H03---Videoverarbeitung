@@ -90,7 +90,7 @@ public class VideoContainer {
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
-			current = next();
+			current = null;
 		}
 
 		@Override
