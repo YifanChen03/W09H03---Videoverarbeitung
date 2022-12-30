@@ -2,6 +2,7 @@
 package pgdp.filter;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.function.Function;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -38,9 +39,73 @@ public final class Operations {
 	}
 
 	public static Function<Frame, Frame> crop(int width, int height) {
-
 		// TODO: Implementieren
-		throw new NotImplementedException();
+		Function<Frame, Frame> output = new Function<Frame, Frame>() {
+			@Override
+			public Frame apply(Frame frame) {
+				int frameHeight = frame.getHeight();
+				int frameWidth = frame.getWidth();
+				BufferedImage framePixels = frame.getPixels();
+				BufferedImage newFramePixels = framePixels;
+				Frame outFrame;
+				int cutOff;
+
+				//if cropping to smaller height
+				if (height < frameHeight) {
+					int heightDiff = frameHeight - height;
+					cutOff = heightDiff / 2;
+					if (heightDiff % 2 == 0) {
+						//cut off equal amount of pixels on top and on the bottom
+						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth, heightDiff);
+					} else {
+						//cut off one more on the side that's further from the Pixel (0, 0)
+						newFramePixels = newFramePixels.getSubimage(0, cutOff - 1, frameWidth, heightDiff);
+					}
+				}
+				//if cropping to smaller width
+				if (width < frameWidth) {
+					int widthDiff = frameWidth - width;
+					cutOff = width / 2;
+					if (width % 2 == 0) {
+						//cut off equal amount of pixels on left and rigth side
+						newFramePixels = newFramePixels.getSubimage(cutOff, 0, widthDiff, frameHeight);
+					} else {
+						//cut off one more on the side that's further from the Pixel (0, 0)
+						newFramePixels = newFramePixels.getSubimage(cutOff, 0, widthDiff - 1, frameHeight);
+					}
+				}
+				//if cropping to bigger height
+				if (height > frameHeight) {
+					int heightDiff = height - frameHeight;
+					cutOff = heightDiff / 2;
+					if (heightDiff % 2 == 0) {
+						//add equal amount of pixels on top and on the bottom
+						newFramePixels = newFramePixels.getSubimage(0, - cutOff, frameWidth, frameHeight + cutOff);
+					} else {
+						//add one more on the side that's further from the Pixel (0, 0)
+						newFramePixels = newFramePixels.getSubimage(0, - cutOff, frameWidth,
+								frameHeight + cutOff + 1);
+					}
+				}
+				//if cropping to bigger width
+				if (width > frameWidth) {
+					int widthDiff = width - frameWidth;
+					cutOff = widthDiff / 2;
+					if (widthDiff % 2 == 0) {
+						//add equal amount of pixels on left and rigth side
+						newFramePixels = newFramePixels.getSubimage(- cutOff, 0, frameWidth + cutOff,
+								frameHeight);
+					} else {
+						//add one more on the side that's further from the Pixel (0, 0)
+						newFramePixels = newFramePixels.getSubimage(- cutOff, 0, frameWidth + cutOff + 1,
+								frameHeight);
+					}
+				}
+				outFrame = new Frame(newFramePixels, frame.getFrameNumber());
+				return outFrame;
+			}
+		};
+		return output;
 	}
 
 	public static Function<Frame, Frame> encode(String msg) {
