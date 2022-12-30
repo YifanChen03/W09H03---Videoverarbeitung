@@ -106,8 +106,9 @@ public class VideoContainer {
 				if (hasNext()) {
 					current = fp.nextFrame();
 					return current;
+				} else {
+					throw new NoSuchElementException();
 				}
-				throw new NoSuchElementException();
 			} catch (Exception e) {
 				throw new NoSuchElementException();
 			}
