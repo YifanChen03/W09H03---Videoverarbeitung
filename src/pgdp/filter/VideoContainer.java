@@ -97,11 +97,6 @@ public class VideoContainer {
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
 			checkNext = fp;
-			try {
-				checkNext.nextFrame();
-			} catch (FFmpegFrameGrabber.Exception e) {
-				throw new RuntimeException(e);
-			}
 			current = null;
 		}
 
