@@ -116,10 +116,7 @@ public class VideoContainer {
 		@Override
 		public Frame next() {
 			// TODO: Implementieren
-			if (hasNext()) {
-				return current;
-			}
-			throw new NoSuchElementException();
+			return current;
 		}
 	}
 }
