@@ -75,21 +75,28 @@ public class VideoContainer {
 	public void write(FrameConsumer fc) throws FrameRecorder.Exception {
 		// TODO: Implementieren
 		//throw new NotImplementedException();
-		frameStream.forEach(frame -> {
+		/*frameStream.forEach(frame -> {
 			try {
 				fc.consume(frame);
 			} catch (FFmpegFrameRecorder.Exception e) {
-
+				throw new RuntimeException();
 			}
-		});
+		});*/
+		Iterator i = frameStream.iterator();
+		while (i.hasNext()) {
+			fc.consume((Frame) i.next());
+		}
+
 		fc.close();
 	}
 	
 	private class FrameIterator implements Iterator<Frame> {
 		private FrameProvider fp;
+		private FrameProvider checkNext;
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
+			checkNext = fp;
 			current = null;
 		}
 
@@ -97,21 +104,21 @@ public class VideoContainer {
 		public boolean hasNext() {
 			// TODO: Implementieren
 			try {
-				current = fp.nextFrame();
+				return checkNext.nextFrame() != null;
 			} catch (FFmpegFrameGrabber.Exception e) {
-				throw new RuntimeException(e);
+				throw new NoSuchElementException(e);
 			}
-			return current != null;
 		}
 
 		@Override
 		public Frame next() {
 			// TODO: Implementieren
-			if (hasNext()) {
-				return current;
-			} else {
-				throw new NoSuchElementException();
+			try {
+				current = fp.nextFrame();
+			} catch (FFmpegFrameGrabber.Exception e) {
+				throw new RuntimeException(e);
 			}
+			return current;
 		}
 	}
 }

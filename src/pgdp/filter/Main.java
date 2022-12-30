@@ -6,7 +6,7 @@ public final class Main {
 
 	public static void main(String[] args) {
 
-		VideoContainer in;
+		VideoContainer in = null;
 	    FrameProvider fp = new FrameProvider("noot.mp4");
 		try {
 			in = new VideoContainer(fp);
