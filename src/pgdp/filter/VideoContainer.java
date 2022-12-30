@@ -91,12 +91,9 @@ public class VideoContainer {
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
-			checkNextfp = fp;
 			try {
 				current = this.fp.nextFrame();
-				checkNextfp.nextFrame();
-				checkNextfp.nextFrame();
-			} catch (Exception e) {
+			} catch (FFmpegFrameGrabber.Exception e) {
 				throw new NoSuchElementException();
 			}
 		}
@@ -105,23 +102,19 @@ public class VideoContainer {
 		public boolean hasNext() {
 			// TODO: Implementieren
 			try {
-				return checkNextfp.nextFrame() != null;
+				current = fp.nextFrame();
 			} catch (FFmpegFrameGrabber.Exception e) {
 				throw new RuntimeException(e);
 			}
+			return current != null;
 		}
 
 		@Override
 		public Frame next() {
 			// TODO: Implementieren
-			try {
-				current = fp.nextFrame();
-				checkNextfp.nextFrame();
-				if (!hasNext()) {
-					throw new NoSuchElementException();
-				}
+			if (hasNext()) {
 				return current;
-			} catch (Exception e) {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
