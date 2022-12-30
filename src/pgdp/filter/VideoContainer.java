@@ -77,7 +77,6 @@ public class VideoContainer {
 		//throw new NotImplementedException();
 		frameStream.forEach(frame -> {
 			try {
-				if (frame != null)
 				fc.consume(frame);
 			} catch (FFmpegFrameRecorder.Exception e) {
 				throw new RuntimeException(e);
@@ -91,6 +90,11 @@ public class VideoContainer {
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
+			try {
+				current = fp.nextFrame();
+			} catch (Exception e) {
+
+			}
 		}
 
 		@Override
