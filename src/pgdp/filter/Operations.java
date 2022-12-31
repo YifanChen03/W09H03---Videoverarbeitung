@@ -73,50 +73,31 @@ public final class Operations {
 				if (height > frameHeight) {
 					int heightDiff = height - frameHeight;
 					cutOff = heightDiff / 2;
-					if (heightDiff % 2 == 0) {
-						//add equal amount of pixels on top and on the bottom
-						//source: https://stackoverflow.com/questions/3514158/how-do-you-clone-a-bufferedimage
-						BufferedImage tempBI = new BufferedImage(newFramePixels.getWidth(), height,
-								newFramePixels.getType());
-						Graphics2D graphics = tempBI.createGraphics();
-						graphics.drawImage(newFramePixels, 3, cutOff, null);
-						graphics.dispose();
+					//add equal amount of pixels on top and on the bottom
+					//add one more on the side that's further from the Pixel (0, 0)
+					//also works for both the same way
+					//source: https://stackoverflow.com/questions/3514158/how-do-you-clone-a-bufferedimage
+					BufferedImage tempBI = new BufferedImage(newFramePixels.getWidth(), height,
+							newFramePixels.getType());
+					Graphics2D graphics = tempBI.createGraphics();
+					graphics.drawImage(newFramePixels, 0, cutOff, null);
+					graphics.dispose();
 
-						newFramePixels = tempBI;
-					} else {
-						//add one more on the side that's further from the Pixel (0, 0)
-						BufferedImage tempBI = new BufferedImage(newFramePixels.getWidth(), height + 1,
-								newFramePixels.getType());
-						Graphics2D graphics = tempBI.createGraphics();
-						graphics.drawImage(newFramePixels, 0, cutOff, null);
-						graphics.dispose();
-
-						newFramePixels = tempBI;
-					}
+					newFramePixels = tempBI;
 				}
 				//if cropping to bigger width
 				if (width > frameWidth) {
 					int widthDiff = width - frameWidth;
 					cutOff = widthDiff / 2;
-					if (widthDiff % 2 == 0) {
-						//add equal amount of pixels on left and rigth side
-						BufferedImage tempBI = new BufferedImage(width, newFramePixels.getHeight(),
-								newFramePixels.getType());
-						Graphics2D graphics = tempBI.createGraphics();
-						graphics.drawImage(newFramePixels, cutOff, 0, null);
-						graphics.dispose();
+					//add equal amount of pixels on left and rigth side
+					//add one more on the side that's further from the Pixel (0, 0)
+					BufferedImage tempBI = new BufferedImage(width, newFramePixels.getHeight(),
+							newFramePixels.getType());
+					Graphics2D graphics = tempBI.createGraphics();
+					graphics.drawImage(newFramePixels, cutOff, 0, null);
+					graphics.dispose();
 
-						newFramePixels = tempBI;
-					} else {
-						//add one more on the side that's further from the Pixel (0, 0)
-						BufferedImage tempBI = new BufferedImage(width + 1, newFramePixels.getHeight(),
-								newFramePixels.getType());
-						Graphics2D graphics = tempBI.createGraphics();
-						graphics.drawImage(newFramePixels, cutOff, 0, null);
-						graphics.dispose();
-
-						newFramePixels = tempBI;
-					}
+					newFramePixels = tempBI;
 				}
 				outFrame = new Frame(newFramePixels, frame.getFrameNumber());
 				return outFrame;
