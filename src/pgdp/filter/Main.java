@@ -19,6 +19,7 @@ public final class Main {
 
 		// Grayscale
 		//in.applyFunc(Operations::grayscale);
+		in.applyFunc(Operations.crop(2, 2));
 
 		// Hochkant
 		//in.applyFunc(Operations.crop(in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight()));

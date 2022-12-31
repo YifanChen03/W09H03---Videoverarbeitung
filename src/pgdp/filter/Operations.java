@@ -57,7 +57,7 @@ public final class Operations {
 					if (heightDiff % 2 == 0) {
 						//cut off equal amount of pixels on top and on the bottom
 						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth,
-								newFramePixels.getHeight() - heightDiff);
+								newFramePixels.getHeight() - cutOff);
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
 						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth,
@@ -70,7 +70,7 @@ public final class Operations {
 					cutOff = width / 2;
 					if (width % 2 == 0) {
 						//cut off equal amount of pixels on left and rigth side
-						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth - widthDiff,
+						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth - cutOff,
 								newFramePixels.getHeight());
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
