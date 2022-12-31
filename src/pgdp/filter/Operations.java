@@ -57,11 +57,11 @@ public final class Operations {
 					if (heightDiff % 2 == 0) {
 						//cut off equal amount of pixels on top and on the bottom
 						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth,
-								frameHeight - heightDiff);
+								newFramePixels.getHeight() - heightDiff);
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
 						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth,
-								frameHeight - heightDiff - 1);
+								newFramePixels.getHeight() - heightDiff - 1);
 					}
 				}
 				//if cropping to smaller width
@@ -71,11 +71,11 @@ public final class Operations {
 					if (width % 2 == 0) {
 						//cut off equal amount of pixels on left and rigth side
 						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth - widthDiff,
-								frameHeight);
+								newFramePixels.getHeight());
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
 						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth - widthDiff - 1,
-								frameHeight);
+								newFramePixels.getHeight());
 					}
 				}
 				//if cropping to bigger height
