@@ -54,29 +54,20 @@ public final class Operations {
 				if (height < frameHeight) {
 					int heightDiff = frameHeight - height;
 					cutOff = heightDiff / 2;
-					if (heightDiff % 2 == 0) {
-						//cut off equal amount of pixels on top and on the bottom
-						newFramePixels = newFramePixels.getSubimage(0, cutOff, newFramePixels.getWidth(),
-								newFramePixels.getHeight() - heightDiff);
-					} else {
-						//cut off one more on the side that's further from the Pixel (0, 0)
-						newFramePixels = newFramePixels.getSubimage(0, cutOff, newFramePixels.getWidth(),
-								newFramePixels.getHeight() - heightDiff);
-					}
+					//cut off equal amount of pixels on top and on the bottom
+					//cut off one more Pixel on the side that's further from the Pixel (0, 0)
+					//works for both because int cutOff is width / 2 - 1 if width is odd
+					newFramePixels = newFramePixels.getSubimage(0, cutOff, newFramePixels.getWidth(),
+							newFramePixels.getHeight() - heightDiff);
 				}
 				//if cropping to smaller width
 				if (width < frameWidth) {
 					int widthDiff = frameWidth - width;
 					cutOff = width / 2;
-					if (width % 2 == 0) {
-						//cut off equal amount of pixels on left and rigth side
-						newFramePixels = newFramePixels.getSubimage(cutOff, 0,
-								newFramePixels.getWidth() - widthDiff, newFramePixels.getHeight());
-					} else {
-						//cut off one more on the side that's further from the Pixel (0, 0)
-						newFramePixels = newFramePixels.getSubimage(cutOff, 0,
-								newFramePixels.getWidth() - widthDiff, newFramePixels.getHeight());
-					}
+					//cut off equal amount of pixels on left and rigth side
+					//cut off one more Pixel on the side that's further from the Pixel (0, 0)
+					newFramePixels = newFramePixels.getSubimage(cutOff, 0,
+							newFramePixels.getWidth() - widthDiff, newFramePixels.getHeight());
 				}
 				//if cropping to bigger height
 				if (height > frameHeight) {
@@ -88,7 +79,7 @@ public final class Operations {
 						BufferedImage tempBI = new BufferedImage(newFramePixels.getWidth(), height,
 								newFramePixels.getType());
 						Graphics2D graphics = tempBI.createGraphics();
-						graphics.drawImage(newFramePixels, 0, cutOff, null);
+						graphics.drawImage(newFramePixels, 3, cutOff, null);
 						graphics.dispose();
 
 						newFramePixels = tempBI;
