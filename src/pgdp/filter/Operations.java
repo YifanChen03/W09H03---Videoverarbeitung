@@ -71,11 +71,11 @@ public final class Operations {
 					if (width % 2 == 0) {
 						//cut off equal amount of pixels on left and rigth side
 						newFramePixels = newFramePixels.getSubimage(cutOff, 0,
-								newFramePixels.getWidth() - cutOff, newFramePixels.getHeight());
+								newFramePixels.getWidth() - widthDiff, newFramePixels.getHeight());
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
 						newFramePixels = newFramePixels.getSubimage(cutOff, 0,
-								newFramePixels.getWidth() - cutOff - 1, newFramePixels.getHeight());
+								newFramePixels.getWidth() - widthDiff, newFramePixels.getHeight());
 					}
 				}
 				//if cropping to bigger height
