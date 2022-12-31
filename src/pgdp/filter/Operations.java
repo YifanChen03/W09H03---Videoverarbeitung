@@ -61,7 +61,7 @@ public final class Operations {
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
 						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth,
-								newFramePixels.getHeight() - cutOff + 1);
+								newFramePixels.getHeight() - cutOff - 1);
 					}
 				}
 				//if cropping to smaller width
@@ -74,7 +74,7 @@ public final class Operations {
 								newFramePixels.getHeight());
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
-						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth - cutOff + 1,
+						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth - cutOff - 1,
 								newFramePixels.getHeight());
 					}
 				}
