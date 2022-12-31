@@ -46,7 +46,7 @@ public class VideoContainer {
 	/**
 	 * TODO: zu implementieren Appliziert Funktion auf den Frame Stream
 	 *
-	 * @param //checkFunction
+	 * @param function
 	 */
 	public void applyFunc(Function<Frame, Frame> function) {
 		// TODO: Implementieren
