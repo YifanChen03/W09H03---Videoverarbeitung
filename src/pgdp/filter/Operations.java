@@ -107,9 +107,15 @@ public final class Operations {
 	}
 
 	public static Function<Frame, Frame> encode(String msg) {
-
 		// TODO: Implementieren
-		throw new NotImplementedException();
+		Function<Frame, Frame> output = new Function<Frame, Frame>() {
+			@Override
+			public Frame apply(Frame frame) {
+				return null;
+			}
+		};
+
+		return output;
 	}
 
 	public static String decode(Frame frame) {
