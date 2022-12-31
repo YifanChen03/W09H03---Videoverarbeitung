@@ -60,7 +60,7 @@ public final class Operations {
 								newFramePixels.getHeight() - heightDiff);
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
-						newFramePixels = newFramePixels.getSubimage(0, cutOff, frameWidth,
+						newFramePixels = newFramePixels.getSubimage(0, cutOff + 1, frameWidth,
 								newFramePixels.getHeight() - heightDiff - 1);
 					}
 				}
@@ -74,7 +74,7 @@ public final class Operations {
 								newFramePixels.getHeight());
 					} else {
 						//cut off one more on the side that's further from the Pixel (0, 0)
-						newFramePixels = newFramePixels.getSubimage(cutOff, 0, frameWidth - widthDiff - 1,
+						newFramePixels = newFramePixels.getSubimage(cutOff + 1, 0, frameWidth - widthDiff - 1,
 								newFramePixels.getHeight());
 					}
 				}
