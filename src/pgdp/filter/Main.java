@@ -1,10 +1,12 @@
 package pgdp.filter;
 
+import org.bytedeco.javacv.FrameRecorder;
+
 public final class Main {
 	
 	private Main() {}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FrameRecorder.Exception {
 
 		VideoContainer in = null;
 	    FrameProvider fp = new FrameProvider("noot.mp4");
@@ -15,7 +17,8 @@ public final class Main {
 		}
 
 		// limitiere Laufzeit
-		in.limit(250);
+		//in.limit(250);
+		in.write(null);
 
 		// Grayscale
 		//in.applyFunc(Operations::grayscale);
@@ -35,12 +38,12 @@ public final class Main {
 		});*/
 
 		// Ausschreiben
-		try {
+		/*try {
 		    FrameConsumer fc = new FrameConsumer(in.getProvider(), "out_finalFinal_Donev2.mp4", in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight());
 			//FrameConsumer fc = new FrameConsumer(in.getProvider(), "out_finalFinal_Donev2.mp4", in.getProvider().getWidth(), in.getProvider().getHeight());
 			in.write(fc);
 		} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
 			System.err.println("Error writing File");
-		}
+		}*/
 	}
 }

@@ -19,7 +19,7 @@ public class VideoContainer {
 
 	private FrameProvider provider;
 
-	private Stream<Frame> frameStream;
+	public Stream<Frame> frameStream;
 	
 	/**
 	 * Nutzt javacv um Videodatei darzustellen.
@@ -80,37 +80,69 @@ public class VideoContainer {
 				throw new RuntimeException();
 			}
 		});
+		/*FrameIterator fit = new FrameIterator(getProvider());
+		while (fit.hasNext()) {
+			System.out.println(fit.next().getFrameNumber());
+		}*/
 		fc.close();
 	}
 	
 	private class FrameIterator implements Iterator<Frame> {
 		private FrameProvider fp;
-		private FrameProvider next_checker;
 		private Frame current;
+		private Frame next;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
-			this.next_checker = fp;
 			current = null;
+			try {
+				next = this.fp.nextFrame();
+			} catch (FFmpegFrameGrabber.Exception e) {
+				next = null;
+			}
 		}
 
 		@Override
 		public boolean hasNext() {
 			// TODO: Implementieren
-			try {
-				current = fp.nextFrame();
-				return current != null;
-			} catch (FFmpegFrameGrabber.Exception e) {
-				return false;
-			}
+			return next != null;
 		}
 
 		@Override
 		public Frame next() {
 			// TODO: Implementieren
+			current = next;
+			try {
+				next = fp.nextFrame();
+			} catch (FFmpegFrameGrabber.Exception e) {
+				next = null;
+			}
 			if (current == null) {
 				throw new NoSuchElementException();
 			}
 			return current;
 		}
+
+		/*FrameProvider fp;
+		Frame current;
+		public FrameIterator(FrameProvider fp) {
+			this.fp = fp;
+			current = null;
+		}
+		@Override
+		public boolean hasNext() {
+			try {
+				current = fp.nextFrame();
+				return current != null;
+			} catch (FFmpegFrameGrabber.Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		@Override
+		public Frame next() {
+			if (current == null)
+				throw new NoSuchElementException();
+			return current;
+		}*/
 	}
 }
