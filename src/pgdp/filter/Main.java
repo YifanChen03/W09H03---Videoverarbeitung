@@ -15,7 +15,7 @@ public final class Main {
 		}
 
 		// limitiere Laufzeit
-		//in.limit(250);
+		in.limit(250);
 
 		// Grayscale
 		//in.applyFunc(Operations::grayscale);
@@ -23,15 +23,21 @@ public final class Main {
 
 		// Hochkant
 		//in.applyFunc(Operations.crop(in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight()));
-		in.applyFunc(Operations.crop(in.getProvider().getWidth() + 501, in.getProvider().getHeight() + 500));
+		//in.applyFunc(Operations.crop(0, 0));
 		/*in.applyFunc(frame -> {
 			System.out.println(frame.getPixels().getRGB(0, 0));
+			return frame;
+		});*/
+		/*in.applyFunc(frame -> {
+			System.out.println(frame.getPixels().getWidth());
+			System.out.println(frame.getPixels().getHeight());
 			return frame;
 		});*/
 
 		// Ausschreiben
 		try {
 		    FrameConsumer fc = new FrameConsumer(in.getProvider(), "out_finalFinal_Donev2.mp4", in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight());
+			//FrameConsumer fc = new FrameConsumer(in.getProvider(), "out_finalFinal_Donev2.mp4", in.getProvider().getWidth(), in.getProvider().getHeight());
 			in.write(fc);
 		} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
 			System.err.println("Error writing File");

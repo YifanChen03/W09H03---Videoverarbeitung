@@ -37,12 +37,6 @@ public class VideoContainer {
 		}
 	}
 
-	public static class IllegalVideoFormatException extends Exception {
-		public String toString() {
-			return "One of the Dimensions of the FrameProvider is 0";
-		}
-	}
-
 	/**
 	 * TODO: zu implementieren Appliziert Funktion auf den Frame Stream
 	 *
@@ -57,7 +51,9 @@ public class VideoContainer {
 	public void limit(long frames) {
 		// TODO: Implementieren
 		//throw new NotImplementedException();
-		frameStream = getFrameStream().limit(frames);
+		if (frames >= 0) {
+			frameStream = getFrameStream().limit(frames);
+		}
 	}
 
 	public FrameProvider getProvider() {
@@ -89,11 +85,11 @@ public class VideoContainer {
 	
 	private class FrameIterator implements Iterator<Frame> {
 		private FrameProvider fp;
-		private FrameProvider checkNext;
+		private FrameProvider next_checker;
 		private Frame current;
 		public FrameIterator(FrameProvider fp) {
 			this.fp = fp;
-			checkNext = fp;
+			this.next_checker = fp;
 			current = null;
 		}
 
@@ -104,7 +100,7 @@ public class VideoContainer {
 				current = fp.nextFrame();
 				return current != null;
 			} catch (FFmpegFrameGrabber.Exception e) {
-				throw new RuntimeException(e);
+				return false;
 			}
 		}
 
