@@ -121,7 +121,7 @@ public class VideoContainer {
 			}
 			return current;
 		}
-		//erstmal unwichtig
+
 		/*FrameProvider fp;
 		Frame current;
 		public FrameIterator(FrameProvider fp) {
