@@ -3,6 +3,7 @@ package pgdp.filter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.function.Function;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -130,7 +131,34 @@ public final class Operations {
 		Function<Frame, Frame> output = new Function<Frame, Frame>() {
 			@Override
 			public Frame apply(Frame frame) {
-				return null;
+				int f_num = frame.getFrameNumber();
+				int width = frame.getWidth();
+				int char_capacity = width / 8; //works for all width because int rounds down
+				int start_char = f_num * char_capacity;
+				ArrayList<Integer> binList = new ArrayList<>();
+				//int end_char = start_char + char_capacity - 1;
+				//create Stream of Chars and only get from start_char to end_char (or limit) then convert to binary
+				msg.chars()
+						.mapToObj(i -> (char) i)
+						.skip(start_char)
+						.limit(char_capacity)
+						//now convert to binary
+						.map(c -> c.toString().getBytes())
+						.map(bin -> Integer.toBinaryString(bin[0]))
+						//now for every String add all bits as single Integers into binList
+						.forEach(binString -> binString.chars()
+								.forEach(binInt -> binList.add(binInt)));
+
+				for (int i = 0; i < binList.size(); i++) {
+					if (binList.get(i) == 0) {
+						//make Pixel black
+						frame.getPixels().setRGB(i, frame.getHeight() - 1, Color.BLACK.getRGB());
+					} else {
+						//make Pixel white
+						frame.getPixels().setRGB(i, frame.getHeight() - 1, Color.WHITE.getRGB());
+					}
+				}
+				return frame;
 			}
 		};
 
