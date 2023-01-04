@@ -151,10 +151,10 @@ public final class Operations {
 
 				for (int i = 0; i < binList.size(); i++) {
 					if (binList.get(i) == 0) {
-						//make Pixel black
+						//make Pixel in last row with i as x black
 						frame.getPixels().setRGB(i, frame.getHeight() - 1, Color.BLACK.getRGB());
-					} else {
-						//make Pixel white
+					} else if (binList.get(i) == 1){
+						//make Pixel int last row with i as x white
 						frame.getPixels().setRGB(i, frame.getHeight() - 1, Color.WHITE.getRGB());
 					}
 				}
