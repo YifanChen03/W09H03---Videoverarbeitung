@@ -135,7 +135,7 @@ public final class Operations {
 				int width = frame.getWidth();
 				int char_capacity = width / 8; //works for all width because int rounds down
 				int start_char = f_num * char_capacity;
-				ArrayList<Integer> binList = new ArrayList<>();
+				ArrayList<String> binList = new ArrayList<>();
 				//int end_char = start_char + char_capacity - 1;
 				//create Stream of Chars and only get from start_char to end_char (or limit) then convert to binary
 				msg.chars()
@@ -147,18 +147,20 @@ public final class Operations {
 						.map(bin -> Integer.toBinaryString(bin[0]))
 						//now for every String add all bits as single Integers into binList
 						.forEach(binString -> binString.chars()
-								.forEach(binInt -> binList.add(binInt)));
-
+								.mapToObj(i -> (char) i)
+								.forEach(binChar -> binList.add(String.valueOf(binChar))));
+				//binList.stream().forEach(System.out::println);
 				for (int i = 0; i < binList.size(); i++) {
-					if (binList.get(i) == 0) {
+					if (binList.get(i).equals("0")) {
 						//make Pixel in last row with i as x black
 						frame.getPixels().setRGB(i, frame.getHeight() - 1, Color.BLACK.getRGB());
-					} else if (binList.get(i) == 1){
+					} else if (binList.get(i).equals("1")){
 						//make Pixel int last row with i as x white
 						frame.getPixels().setRGB(i, frame.getHeight() - 1, Color.WHITE.getRGB());
 					}
 				}
-				return frame;
+				Frame outFrame = new Frame(frame.getPixels(), frame.getFrameNumber());
+				return outFrame;
 			}
 		};
 

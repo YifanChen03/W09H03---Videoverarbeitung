@@ -19,7 +19,7 @@ public class VideoContainer {
 
 	private FrameProvider provider;
 
-	private Stream<Frame> frameStream;
+	public Stream<Frame> frameStream;
 	
 	/**
 	 * Nutzt javacv um Videodatei darzustellen.
