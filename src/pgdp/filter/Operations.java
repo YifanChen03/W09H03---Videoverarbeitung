@@ -131,6 +131,9 @@ public final class Operations {
 		Function<Frame, Frame> output = new Function<Frame, Frame>() {
 			@Override
 			public Frame apply(Frame frame) {
+				if (msg == null) {
+					return frame;
+				}
 				int f_num = frame.getFrameNumber();
 				int width = frame.getWidth();
 				int char_capacity = width / 8; //works for all width because int rounds down
@@ -145,6 +148,13 @@ public final class Operations {
 						//now convert to binary
 						.map(c -> c.toString().getBytes())
 						.map(bin -> Integer.toBinaryString(bin[0]))
+						//if BinaryString removed leading zero
+						.map(binString -> {
+							if (binString.length() == 7) {
+								binString = "0" + binString;
+							}
+							return binString;
+						})
 						//now for every String add all bits as single Integers into binList
 						.forEach(binString -> binString.chars()
 								.mapToObj(i -> (char) i)
