@@ -3,8 +3,10 @@ package pgdp.filter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -178,9 +180,45 @@ public final class Operations {
 	}
 
 	public static String decode(Frame frame) {
-
 		// TODO: Implementieren
-		throw new NotImplementedException();
+		if (frame == null) {
+			return null;
+		}
+
+		StringBuilder outputBuilder = new StringBuilder();
+		ArrayList<String> byteList = new ArrayList<>();
+		//int f_num = frame.getFrameNumber();
+		int width = frame.getWidth();
+		//int char_capacity = width / 8; //works for all width because int rounds down
+		//int start_char = f_num * char_capacity;
+		for (int i = 0; i < width; i++) {
+			int pixRGB = frame.getPixels().getRGB(i, frame.getHeight() - 1);
+			Color pixColor = new Color(pixRGB);
+			int rgbSum = pixColor.getBlue() + pixColor.getRed() + pixColor.getGreen();
+			if (rgbSum > 384) {
+				//pixel bit counts as 1
+				outputBuilder.append("1");
+			} else {
+				//pixel bit counts as 0
+				outputBuilder.append("0");
+			}
+		}
+		//split binary code into packets of 8 bits
+		for (int i = 0; i < outputBuilder.toString().length() / 8; i++) {
+			int start = i * 8;
+			int end = start + 8;
+			String byteString = outputBuilder.substring(start, end);
+			byteList.add(byteString);
+		}
+		//convert bytes into Integers
+		outputBuilder.setLength(0);
+		byteList.stream()
+				.map(byteString -> Integer.parseInt(byteString, 2))
+				.mapToInt(byteInteger -> byteInteger)
+				.mapToObj(byteInt -> (char) byteInt)
+				.forEach(outputBuilder::append);
+
+		return outputBuilder.toString();
 	}
 
 }
