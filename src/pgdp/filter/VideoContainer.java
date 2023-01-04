@@ -85,7 +85,7 @@ public class VideoContainer {
 			Frame f = it.next();
 			System.out.println(f.getFrameNumber());
 		}*/
-		//fc.close();
+		fc.close();
 	}
 	
 	private class FrameIterator implements Iterator<Frame> {
