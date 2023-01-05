@@ -19,7 +19,7 @@ public class VideoContainer {
 
 	private FrameProvider provider;
 
-	public Stream<Frame> frameStream;
+	private Stream<Frame> frameStream;
 	
 	/**
 	 * Nutzt javacv um Videodatei darzustellen.
@@ -134,7 +134,8 @@ public class VideoContainer {
 				current = fp.nextFrame();
 				return current != null;
 			} catch (FFmpegFrameGrabber.Exception e) {
-				throw new RuntimeException(e);
+				current = null;
+				return true;
 			}
 		}
 
