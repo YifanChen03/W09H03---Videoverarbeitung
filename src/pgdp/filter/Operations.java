@@ -190,7 +190,11 @@ public final class Operations {
 		ArrayList<String> byteList = new ArrayList<>();
 		//int f_num = frame.getFrameNumber();
 		int width = frame.getWidth();
-		//int char_capacity = width / 8; //works for all width because int rounds down
+		int char_capacity = width / 8; //works for all width because int rounds down
+		//remove last frames if can't be divided by 8
+		if (width % 8 != 0) {
+			width = char_capacity * 8;
+		}
 		//int start_char = f_num * char_capacity;
 		for (int i = 0; i < width; i++) {
 			int pixRGB = frame.getPixels().getRGB(i, frame.getHeight() - 1);
