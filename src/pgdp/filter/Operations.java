@@ -150,13 +150,14 @@ public final class Operations {
 						//now convert to binary
 						.map(c -> c.toString().getBytes())
 						.map(bin -> Integer.toBinaryString(bin[0]))
-						//if BinaryString removed leading zero
+						//if BinaryString removed leading zeros
 						.map(binString -> {
-							if (binString.length() == 7) {
+							while (binString.length() < 8) {
 								binString = "0" + binString;
 							}
 							return binString;
 						})
+						//.forEach(System.out::println);
 						//now for every String add all bits as single Integers into binList
 						.forEach(binString -> binString.chars()
 								.mapToObj(i -> (char) i)

@@ -21,11 +21,11 @@ public final class Main {
 		//in.write(null);
 
 		// Grayscale
-		//in.applyFunc(Operations::grayscale);
+		in.applyFunc(Operations::grayscale);
 		//in.applyFunc(Operations.crop(800, 800));
 
 		// Hochkant
-		//in.applyFunc(Operations.crop(in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight()));
+		in.applyFunc(Operations.crop(in.getProvider().getHeight() * 9 / 16, in.getProvider().getHeight()));
 		//in.applyFunc(Operations.crop(0, 0));
 		/*in.applyFunc(frame -> {
 			System.out.println(frame.getPixels().getRGB(0, 0));
