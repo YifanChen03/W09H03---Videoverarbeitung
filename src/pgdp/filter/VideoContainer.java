@@ -26,15 +26,15 @@ public class VideoContainer {
 	 */
 	public VideoContainer(FrameProvider fp) throws FileNotFoundException, IllegalVideoFormatException {
 		// TODO: Implementieren
-		provider = fp;
-		frameStream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(
-				new FrameIterator(fp), Spliterator.ORDERED), false);
 		if (!fp.fileExists()) {
 			throw new FileNotFoundException();
 		}
 		if (fp.getHeight() == 0 || fp.getWidth() == 0) {
 			throw new IllegalVideoFormatException();
 		}
+		provider = fp;
+		frameStream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+				new FrameIterator(fp), Spliterator.ORDERED), false);
 	}
 
 	/**
